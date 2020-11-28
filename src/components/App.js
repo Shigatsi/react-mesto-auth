@@ -1,12 +1,17 @@
 import Header from './Header';
-import Footer from './Footer';
 import Main from './Main';
+import PopupWithForm from './PopupWithForm';
+import Footer from './Footer';
+
 
 function App() {
   return (
     <div className="page">
       <Header/>
       <Main/>
+      <PopupWithForm name="avatar" title="Обновить аватар" firstInputPlaceholder="Ссылка на аватар"/>
+      <PopupWithForm name="profile" title="Редактировать профиль" firstInputPlaceholder="Имя, Фамилия" secondInputPlaceholder="Род занятий/хобби"/>
+      <PopupWithForm name="place" title="Новое место" firstInputPlaceholder="Название" secondInputPlaceholder="Ссылка на картинку"/>
       <Footer/>
   </div>
   // <template id ="element-template">
