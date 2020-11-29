@@ -4,28 +4,21 @@ import Main from './Main';
 import PopupWithForm from './PopupWithForm';
 import Footer from './Footer';
 
-
-
-
 function App() {
   const [isEditProfilePopupOpen, onEditProfile] = React.useState(false);
   const  [isAddPlacePopupOpen, onAddPlace] = React.useState(false);
   const  [isEditAvatarPopupOpen, onEditAvatar] = React.useState(false);
 
-
    function handleEditPlaceClick () {
     onAddPlace(true);
-  //     //document.querySelector('#edit-profile').classList.remove('popup_hidden');
   };
 
   function handleEditAvatarClick () {
     onEditAvatar(true);
-  //   document.querySelector('#edit-avatar').classList.remove('popup_hidden')
    };
 
    function handleEditProfileClick () {
     onEditProfile(true);
-     //document.querySelector('#edit-profile').classList.remove('popup_hidden');
   };
 
   return (
@@ -36,7 +29,11 @@ function App() {
         onAddPlace = {handleEditPlaceClick}
         onEditAvatar = {handleEditAvatarClick}
       />
-      <PopupWithForm name="avatar" title="Обновить аватар" isOpen={false}>
+      <PopupWithForm
+        name="avatar"
+        title="Обновить аватар"
+        isOpen={isEditAvatarPopupOpen}
+      >
         <input type="url" id="popup_link" name="avatar_url" required  placeholder="Ссылка на аватар" className="popup__input"/>
         <span className='popup__input-error' id='popup_link-input-error'></span>
         <button type="submit" id="avatar-submit" className="popup__save-button">Сохранить</button>
@@ -56,7 +53,7 @@ function App() {
         <span className='popup__input-error' id='popup_link-input-error'></span>
         <button type="submit" id="place-submit" className="popup__save-button">Сохранить</button>
       </PopupWithForm>
-      <PopupWithForm name = "confirm" title="Вы уверены?" isOpen={isEditAvatarPopupOpen}>
+      <PopupWithForm name = "confirm" title="Вы уверены?" isOpen={false}>
         <button type="submit" id="confirm-submit" className="popup__save-button">Да</button>
       </PopupWithForm>
 

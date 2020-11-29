@@ -29,8 +29,5 @@ function Main ({onEditProfile, onAddPlace, onEditAvatar}) {
   )
 }
 
-// Main ();
-
-//onClick={isOpen ? handleEditAvatarClick : console.log('кек')}
 
 export default Main;
