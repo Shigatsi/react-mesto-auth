@@ -1,19 +1,9 @@
 import { render } from "@testing-library/react";
 
 
-function handleEditAvatarClick () {
-  document.querySelector('#edit-avatar').classList.remove('popup_hidden');
-}
 
-function handleEditProfileClick () {
-  document.querySelector('#edit-profile').classList.remove('popup_hidden');
-}
+function Main ({onEditProfile, onAddPlace, onEditAvatar}) {
 
-function handleEditPlaceClick () {
-  document.querySelector('#edit-place').classList.remove('popup_hidden');
-}
-
-function Main () {
   return (
     <main className="content">
       <section className="profile">
@@ -21,16 +11,16 @@ function Main () {
           <div className="profile__avatar-conteiner">
             <img className="profile__avatar" src="./images/avatar.jpg" alt="фото Профиля"/>
             <div className="profile__avatar-overlay">
-              <button className="profile__avatar-edit-button" type="button" onClick={handleEditAvatarClick}></button>
+              <button className="profile__avatar-edit-button" type="button" onClick={onEditAvatar}></button>
             </div>
           </div>
             <div className="profile__info">
               <p className="profile__name">Жак-Ив Кусто </p>
               <p className="profile__lifestyle">Исследователь океана</p>
-              <button className="profile__edit-button"  onClick={handleEditProfileClick} type="button"></button>
+              <button className="profile__edit-button"  type="button" onClick = {onEditProfile}></button>
           </div>
         </div>
-          <button className="profile__add-button" type="button" onClick={handleEditPlaceClick}></button>
+          <button className="profile__add-button" type="button" onClick = {onAddPlace}></button>
       </section>
       <section className="elements">
 
@@ -39,8 +29,8 @@ function Main () {
   )
 }
 
-Main ();
+// Main ();
 
-
+//onClick={isOpen ? handleEditAvatarClick : console.log('кек')}
 
 export default Main;
