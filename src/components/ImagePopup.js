@@ -1,7 +1,7 @@
 function ImagePopup ({card, onClose}) {
 
   return (
-    <section className={`popup ${card ? "" : "popup_hidden" }`}id="img-fullsize" onClick = {onClose}>
+    <section className={`popup ${card ? "" : "popup_hidden" }`}id="img-fullsize">
     <div className="popup__content popup_type_image-disp" >
       <button type="button" id="img-close" className="popup__close-button" onClick = {onClose}></button>
       <figure className="popup__fullsize-img-container">
