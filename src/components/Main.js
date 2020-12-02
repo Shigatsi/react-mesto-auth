@@ -1,6 +1,7 @@
 
 import React from 'react';
-import api from '../utils/Api'
+import api from '../utils/Api';
+import Card from './Card.js';
 
 
 function Main ({onEditProfile, onAddPlace, onEditAvatar}) {
@@ -19,34 +20,29 @@ function Main ({onEditProfile, onAddPlace, onEditAvatar}) {
       .catch(err => console.error(err));//выведем ошибку
   },[])
 
-// Из старого проекта скопируйте разметку карточки, находящуюся внутри тега template, и используйте её внутри JSX-итерации по массиву cards. Используйте подстановку данных элемента массива в JSX, чтобы вывести название карточки, количество лайков и указать URL изображения (как и прежде с помощью атрибута style).
 
- // <template id ="element-template">
-  //   <div class="elements__item">
-  //     <button class="elements__rbin-button" type="button"></button>
-  //     <img class="elements__image" src="#"  alt=""/>
-  //     <div class="elements__bar">
-  //       <h2 class="elements__title"></h2>
-  //       <div class="elements__like-bar">
-  //         <button class="elements__like-button elements__like-button_empty" type="button"></button>
-  //         <p class="elements__like-counter"></p>
-  //       </div>
-  //     </div>
-  //   </div>
-  // </template>
-// Немного подождите, пока загрузятся данные...
 
 const [cards, setCards] = React.useState([]);
 React.useEffect(()=>{
   api.getInitialCards()
   .then((initialCards)=>{
+    console.log('initialCards', initialCards)
+    // setCards(initialCards)})
+    const cards = initialCards.map(item =>{
+      return{
+        cardId:item._id,
+        userId:item.owner._id,
+        src:item.link,
+        title:item.name,
+        likes:item.likes.length,
+        alt: item.name}
+    })
+    setCards(cards);
 
-    setCards([...initialCards])
-    console.log(initialCards)
   })
   .catch(err => console.error(err));
 }, [])
-
+console.log('this is cards from setCards', cards);
 
   return (
     <main className="content">
@@ -67,7 +63,9 @@ React.useEffect(()=>{
           <button className="profile__add-button" type="button" onClick = {onAddPlace}></button>
       </section>
       <section className="elements">
-
+        {cards.map((card) =>
+           <Card key={card.cardId} card={card}/>
+        )}
       </section>
     </main>
   )
