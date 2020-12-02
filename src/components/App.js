@@ -2,7 +2,11 @@ import React from 'react';
 import Header from './Header';
 import Main from './Main';
 import PopupWithForm from './PopupWithForm';
+import ImagePopup from './ImagePopup';
 import Footer from './Footer';
+import Card from './Card';
+
+
 
 function App() {
 
@@ -14,6 +18,7 @@ function App() {
     onAddPlace(false);
     onEditAvatar(false);
     onEditProfile(false);
+    onCardClick('');
   }
 
    function handleEditPlaceClick () {
@@ -28,6 +33,12 @@ function App() {
     onEditProfile(true);
   };
 
+  const [selectedCard, onCardClick] = React.useState('');
+  function handleCardClick (card) {
+    onCardClick(card);
+  }
+
+
   return (
     <div className="page">
       <Header/>
@@ -35,6 +46,7 @@ function App() {
         onEditProfile = {handleEditProfileClick}
         onAddPlace = {handleEditPlaceClick}
         onEditAvatar = {handleEditAvatarClick}
+        onCardClick = {handleCardClick}
       />
       <PopupWithForm
         name="avatar"
@@ -55,6 +67,7 @@ function App() {
         <span className='popup__input-error popup__input-error_hidden' id='popup_lifestyle-input-error'></span>
         <button type="submit" id="profile-submit" className="popup__save-button">Сохранить</button>
       </PopupWithForm>
+
       <PopupWithForm name="place" title="Новое место" isOpen={isAddPlacePopupOpen} onClose = {closeAllPopups}>
         <input type="text" id="popup_place" name="place" minLength="1" maxLength="30" required placeholder="Название" className="popup__input"/>
         <span className='popup__input-error popup__input-error_hidden' id='popup_place-input-error'></span>
@@ -62,9 +75,12 @@ function App() {
         <span className='popup__input-error' id='popup_link-input-error'></span>
         <button type="submit" id="place-submit" className="popup__save-button">Сохранить</button>
       </PopupWithForm>
+
       <PopupWithForm name = "confirm" title="Вы уверены?" isOpen={false} onClose = {closeAllPopups}>
         <button type="submit" id="confirm-submit" className="popup__save-button">Да</button>
       </PopupWithForm>
+
+      <ImagePopup onCardClick={handleCardClick} card = {selectedCard || ''} onClose = {closeAllPopups}/> */
 
       <Footer/>
   </div>

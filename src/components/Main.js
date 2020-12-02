@@ -4,7 +4,7 @@ import api from '../utils/Api';
 import Card from './Card.js';
 
 
-function Main ({onEditProfile, onAddPlace, onEditAvatar}) {
+function Main ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
 
   const [userName, setUserName] = React.useState("");
   const [userDescription, setuserDescription] = React.useState("");
@@ -26,8 +26,6 @@ const [cards, setCards] = React.useState([]);
 React.useEffect(()=>{
   api.getInitialCards()
   .then((initialCards)=>{
-    console.log('initialCards', initialCards)
-    // setCards(initialCards)})
     const cards = initialCards.map(item =>{
       return{
         cardId:item._id,
@@ -42,7 +40,6 @@ React.useEffect(()=>{
   })
   .catch(err => console.error(err));
 }, [])
-console.log('this is cards from setCards', cards);
 
   return (
     <main className="content">
@@ -64,7 +61,11 @@ console.log('this is cards from setCards', cards);
       </section>
       <section className="elements">
         {cards.map((card) =>
-           <Card key={card.cardId} card={card}/>
+           <Card
+              key={card.cardId}
+              card={card}
+              onCardClick ={onCardClick}
+            />
         )}
       </section>
     </main>

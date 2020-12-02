@@ -1,8 +1,9 @@
-function Card ({card}) {
+function Card ({card, onCardClick}) {
+
   return (
     <div className="elements__item">
       <button className="elements__rbin-button" type="button"></button>
-      <img className="elements__image" src={card.src}  alt={card.title} />
+      <img className="elements__image" src={card.src}  alt={card.title} onClick={_=>onCardClick(card)}/>
       <div className="elements__bar">
         <h2 className="elements__title">{card.title}</h2>
         <div className="elements__like-bar">
