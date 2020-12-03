@@ -18,7 +18,7 @@ function App() {
     onAddPlace(false);
     onEditAvatar(false);
     onEditProfile(false);
-    onCardClick('');
+    onCardClick({});
   }
 
    function handleEditPlaceClick () {
@@ -33,7 +33,7 @@ function App() {
     onEditProfile(true);
   };
 
-  const [selectedCard, onCardClick] = React.useState('');
+  const [selectedCard, onCardClick] = React.useState({});
   function handleCardClick (card) {
     onCardClick(card);
   }
