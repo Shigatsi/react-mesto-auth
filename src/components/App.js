@@ -23,15 +23,15 @@ function App() {
 
    function handleEditPlaceClick () {
     onAddPlace(true);
-  };
+  }
 
   function handleEditAvatarClick () {
     onEditAvatar(true);
-   };
+   }
 
    function handleEditProfileClick () {
     onEditProfile(true);
-  };
+  }
 
   const [selectedCard, onCardClick] = React.useState({});
   function handleCardClick (card) {
@@ -87,7 +87,7 @@ function App() {
 
 
   );
-};
+}
 
 
 export default App;
