@@ -4,7 +4,6 @@ import Main from './Main';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import Footer from './Footer';
-import Card from './Card';
 
 
 
