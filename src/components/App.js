@@ -4,14 +4,25 @@ import Main from './Main';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import Footer from './Footer';
-
+import api from '../utils/Api';
 
 
 function App() {
 
+  const [currentUser, setCurrenUser] = React.useState("");
+
   const [isEditProfilePopupOpen, onEditProfile] = React.useState(false);
   const  [isAddPlacePopupOpen, onAddPlace] = React.useState(false);
   const  [isEditAvatarPopupOpen, onEditAvatar] = React.useState(false);
+
+  React.useEffect(()=>{
+    api.getUserData()
+    .then((userData)=>{
+      console.log('from App: '+userData._id)//чёт 2 раза вызывается?
+      setCurrenUser(userData._id)
+    })
+    .catch(err => console.error(err));//выведем ошибку
+  })
 
   function closeAllPopups () {
     onAddPlace(false);
