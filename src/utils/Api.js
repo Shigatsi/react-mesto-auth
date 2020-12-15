@@ -79,26 +79,25 @@ class Api {
     .then(this._transformResJson)
   }
 
-   //публичный метод постановки лайка
-   putLike (cardId) {
-    return fetch (this.baseUrl + '/cards/likes/' + cardId, {
-      method: 'PUT',
-      headers: {
-        authorization: this.headers,
+  //публичный метод постановки и удоления лайка
+  changeLikeCardStatus (cardId, isLiked) {
+     if (isLiked) {
+      return fetch (this.baseUrl + '/cards/likes/' + cardId, {
+        method: 'PUT',
+        headers: {
+          authorization: this.headers,
+        }
+      })
+      .then(this._transformResJson)
+      } else {
+        return fetch (this.baseUrl + '/cards/likes/' + cardId, {
+          method: 'DELETE',
+          headers: {
+            authorization: this.headers,
+          }
+        })
+        .then(this._transformResJson)
       }
-    })
-    .then(this._transformResJson)
-  }
-
-  //публичный метод удоления лайка
-  deleteLike (cardId) {
-    return fetch (this.baseUrl + '/cards/likes/' + cardId, {
-      method: 'DELETE',
-      headers: {
-        authorization: this.headers,
-      }
-    })
-    .then(this._transformResJson)
   }
 
   //публичный метод обновления аватара пользователя

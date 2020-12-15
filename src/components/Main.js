@@ -10,11 +10,12 @@ function Main ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
   const currentUser = React.useContext(CurrentUserContext);
 
   const [cards, setCards] = React.useState([]);
+
+
   React.useEffect(()=>{
     api.getInitialCards()
-    .then((initialCards)=>{
-      const cards = initialCards.map(item =>{
-        console.log(initialCards)
+    .then((Cards)=>{
+      const cards = Cards.map(item =>{
         return{
           cardId:item._id,
           userId:item.owner._id,
@@ -27,7 +28,20 @@ function Main ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
 
     })
     .catch(err => console.error(err));
-  }, [])
+  }, [[], cards])
+
+  function handleCardLike(card) {
+      // Снова проверяем, есть ли уже лайк на этой карточке
+      const isLiked = card.likes.some(i => i._id === currentUser._id);
+      // Отправляем запрос в API и получаем обновлённые данные карточки
+      api.changeLikeCardStatus(card.cardId, !isLiked).then((newCard) => {
+          // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
+        const newCards = cards.map((c) => c._id === card.cardId ? newCard : c);
+        // Обновляем стейт
+        setCards(newCards)
+      });
+  }
+
 
   return (
     <main className="content">
@@ -53,6 +67,7 @@ function Main ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
               key={card.cardId}
               card={card}
               onCardClick ={onCardClick}
+              onCardLike = {handleCardLike}
             />
         )}
       </section>

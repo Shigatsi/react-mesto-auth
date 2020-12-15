@@ -1,9 +1,16 @@
 import React from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function Card ({card, onCardClick}) {
+// Теперь нужно добавить пропс onCardLike для компонента Card и задать в него эту функцию. Также добавьте в Card обработчик клика handleLikeClick и вызовите из него onCardLike с аргументом card — по аналогии с уже имеющимся обработчиком handleClick.
+
+function Card ({card, onCardClick, onCardLike}) {
 
   const currentUser = React.useContext(CurrentUserContext);
+
+
+  function handleLikeClick (card) {
+    onCardLike(card);
+  }
 
   // Определяем, являемся ли мы владельцем текущей карточки
   const isOwn = card.userId === currentUser._id;
@@ -28,7 +35,7 @@ function Card ({card, onCardClick}) {
       <div className="elements__bar">
         <h2 className="elements__title">{card.title}</h2>
         <div className="elements__like-bar">
-          <button className={cardLikeButtonClassName} type="button"></button>
+          <button className={cardLikeButtonClassName} type="button" onClick={_=>handleLikeClick(card)} ></button>
           <p className="elements__like-counter">{card.likes.length}</p>
         </div>
         </div>

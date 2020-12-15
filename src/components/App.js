@@ -49,7 +49,6 @@ function App() {
     onCardClick(card);
   }
 
-
   return (
     <CurrentUserContext.Provider value = {currentUser}>
       <div className="page">
