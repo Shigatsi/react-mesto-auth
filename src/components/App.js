@@ -5,13 +5,13 @@ import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import Footer from './Footer';
 import api from '../utils/Api';
-import {CurrentUserContex, currentUser} from '../contexts/CurrentUserContext';
+import {CurrentUserContext, currentUser} from '../contexts/CurrentUserContext';
 
 
 
 function App() {
 
-  const [currentUser, setCurrenUser] = React.useState("");
+  const [currentUser, setCurrentUser] = React.useState({});
 
   const [isEditProfilePopupOpen, onEditProfile] = React.useState(false);
   const  [isAddPlacePopupOpen, onAddPlace] = React.useState(false);
@@ -20,11 +20,10 @@ function App() {
   React.useEffect(()=>{
     api.getUserData()
     .then((userData)=>{
-      console.log('from App: '+userData._id)//чёт 2 раза вызывается?
-      setCurrenUser(userData._id)
+      setCurrentUser(userData);
     })
     .catch(err => console.error(err));//выведем ошибку
-  })
+  }, [])
 
   function closeAllPopups () {
     onAddPlace(false);
@@ -52,7 +51,7 @@ function App() {
 
 
   return (
-    <CurrentUserContex.Provider value = {currentUser}>
+    <CurrentUserContext.Provider value = {currentUser}>
       <div className="page">
         <Header/>
         <Main
@@ -112,7 +111,7 @@ function App() {
 
         <Footer/>
     </div>
-  </CurrentUserContex.Provider>
+  </CurrentUserContext.Provider>
 
 
   );
