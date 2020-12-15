@@ -14,12 +14,13 @@ function Main ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
     api.getInitialCards()
     .then((initialCards)=>{
       const cards = initialCards.map(item =>{
+        console.log(initialCards)
         return{
           cardId:item._id,
           userId:item.owner._id,
           src:item.link,
           title:item.name,
-          likes:item.likes.length,
+          likes:item.likes,
           alt: item.name}
       })
       setCards(cards);
