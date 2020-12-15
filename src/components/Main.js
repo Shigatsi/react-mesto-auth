@@ -11,7 +11,6 @@ function Main ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
 
   const [cards, setCards] = React.useState([]);
 
-
   React.useEffect(()=>{
     api.getInitialCards()
     .then((Cards)=>{
@@ -28,7 +27,7 @@ function Main ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
 
     })
     .catch(err => console.error(err));
-  }, [[], cards])
+  }, [])
 
   function handleCardLike(card) {
       // Снова проверяем, есть ли уже лайк на этой карточке
@@ -36,10 +35,20 @@ function Main ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
       // Отправляем запрос в API и получаем обновлённые данные карточки
       api.changeLikeCardStatus(card.cardId, !isLiked).then((newCard) => {
           // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
-        const newCards = cards.map((c) => c._id === card.cardId ? newCard : c);
+        cards.map((c) => c._id === card.cardId ? newCard : c);
         // Обновляем стейт
-        setCards(newCards)
+        //setCards(newCards)
       });
+  }
+
+  function handleCardDelete(card){
+    console.log(card)
+    api.deleteCard(card.cardId).then((card)=>{
+      // Формируем новый массив на основе имеющегося, удоляя карточку
+      cards.filter(сard=>{return сard._id=card.cardId});
+      // Обновляем стейт
+       //setCards(newCards)
+    })
   }
 
 
@@ -68,6 +77,7 @@ function Main ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
               card={card}
               onCardClick ={onCardClick}
               onCardLike = {handleCardLike}
+              onCardDelete={handleCardDelete}
             />
         )}
       </section>
