@@ -35,19 +35,19 @@ function Main ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
       // Отправляем запрос в API и получаем обновлённые данные карточки
       api.changeLikeCardStatus(card.cardId, !isLiked).then((newCard) => {
           // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
-        cards.map((c) => c._id === card.cardId ? newCard : c);
-        // Обновляем стейт
-        //setCards(newCards)
+          const newCards =cards.map((c) => c.cardId === card.cardId ? newCard : c);
+         // Обновляем стейт
+         setCards(newCards)
       });
   }
 
   function handleCardDelete(card){
     console.log(card)
-    api.deleteCard(card.cardId).then((card)=>{
+    api.deleteCard(card.cardId).then(()=>{
       // Формируем новый массив на основе имеющегося, удоляя карточку
-      cards.filter(сard=>{return сard._id=card.cardId});
+      const newCards = cards.filter(с=>{return с.cardId!==card.cardId});
       // Обновляем стейт
-       //setCards(newCards)
+      setCards(newCards)
     })
   }
 
