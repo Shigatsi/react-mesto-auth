@@ -22,17 +22,16 @@ function EditProfilePopup  ({isOpen, onClose, onUpdateUser}) {
     setDescription(evt.target.value)
   }
 
-  // function handleSubmit(e) {
-  //   // Запрещаем браузеру переходить по адресу формы
-  //   e.preventDefault();
+  function handleSubmit(e) {
+    // Запрещаем браузеру переходить по адресу формы
+    e.preventDefault();
 
-  //   // Передаём значения управляемых компонентов во внешний обработчик
-  //   props.onUpdateUser({
-  //     name,
-  //     about: description,
-  //   });
-  // }
-
+    // Передаём значения управляемых компонентов во внешний обработчик
+    onUpdateUser({
+      name: name,
+      about: description,
+    });
+  }
 
   return(
     <PopupWithForm
@@ -41,7 +40,7 @@ function EditProfilePopup  ({isOpen, onClose, onUpdateUser}) {
     submited = "Сохранить"
     isOpen={isOpen}
     onClose = {onClose}
-    onUpdateUser = {onUpdateUser}
+    onSubmit = {handleSubmit}
   >
     <input type="text" id="popup_name" name="name" minLength="2" maxLength="40" pattern="[а-яёА-ЯЁA-Za-z \-]*" required placeholder="Имя, Фамилия" className="popup__input" value={name} onChange={handleChangeName}/>
     <span className='popup__input-error popup__input-error_hidden' id='popup_name-input-error'></span>

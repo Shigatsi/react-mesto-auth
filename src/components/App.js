@@ -22,6 +22,7 @@ function App() {
     api.getUserData()
     .then((userData)=>{
       setCurrentUser(userData);
+      console.log(currentUser)
     })
     .catch(err => console.error(err));//выведем ошибку
   }, [])
@@ -50,6 +51,14 @@ function App() {
     onCardClick(card);
   }
 
+
+  function handleUpdateUser (currentUser) {
+    api.patchUserInfo(currentUser).then((updateUserInfo)=>{
+      setCurrentUser(updateUserInfo)
+      closeAllPopups ();
+    })
+  }
+
   return (
     <CurrentUserContext.Provider value = {currentUser}>
       <div className="page">
@@ -72,7 +81,7 @@ function App() {
           <span className='popup__input-error' id='popup_link-input-error'></span>
         </PopupWithForm>
 
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
 
         <PopupWithForm
           name="place"
