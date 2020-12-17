@@ -33,9 +33,17 @@ function Main ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
       // Снова проверяем, есть ли уже лайк на этой карточке
       const isLiked = card.likes.some(i => i._id === currentUser._id);
       // Отправляем запрос в API и получаем обновлённые данные карточки
-      api.changeLikeCardStatus(card.cardId, !isLiked).then((newCard) => {
+      api.changeLikeCardStatus(card.cardId, !isLiked).then((item) => {
+        const newCard = {
+          cardId:item._id,
+          userId:item.owner._id,
+          src:item.link,
+          title:item.name,
+          likes:item.likes,
+          alt: item.name
+        }
           // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
-          const newCards =cards.map((c) => c.cardId === card.cardId ? newCard : c);
+          const newCards = cards.map((c) => c.cardId === card.cardId ? newCard : c);
          // Обновляем стейт
          setCards(newCards)
       });

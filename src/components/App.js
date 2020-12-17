@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './Header';
 import Main from './Main';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import Footer from './Footer';
@@ -69,19 +70,10 @@ function App() {
           onEditAvatar = {handleEditAvatarClick}
           onCardClick = {handleCardClick}
         />
-        <PopupWithForm
-          name="avatar"
-          title="Обновить аватар"
-          submited = "Сохранить"
-          isOpen={isEditAvatarPopupOpen}
-          onClose = {closeAllPopups}
-        >
-
-          <input type="url" id="popup_link" name="avatar_url" required  placeholder="Ссылка на аватар" className="popup__input"/>
-          <span className='popup__input-error' id='popup_link-input-error'></span>
-        </PopupWithForm>
 
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
+
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
 
         <PopupWithForm
           name="place"
