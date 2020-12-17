@@ -7,9 +7,7 @@ import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import Footer from './Footer';
 import api from '../utils/Api';
-import {CurrentUserContext, currentUser} from '../contexts/CurrentUserContext';
-
-
+import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
 function App() {
 
@@ -23,7 +21,6 @@ function App() {
     api.getUserData()
     .then((userData)=>{
       setCurrentUser(userData);
-      console.log(currentUser)
     })
     .catch(err => console.error(err));//выведем ошибку
   }, [])
@@ -60,6 +57,21 @@ function App() {
     })
   }
 
+
+// Используйте реф
+// На этот раз вместо управляемых компонентов используйте реф, чтобы получить прямой доступ к DOM-элементу инпута и его значению.
+
+// В App добавьте handleUpdateAvatar, вызывающий api.setUserAvatar. Не забудьте обновлять аватар локально после завершения запроса.
+
+  function handleUpdateAvatar (avatarUrl) {
+    api.patchUserAvatar(avatarUrl).then((userData)=>{
+      console.log(avatarUrl)
+      console.log(currentUser)
+      setCurrentUser(userData)
+      closeAllPopups ();
+    })
+  }
+
   return (
     <CurrentUserContext.Provider value = {currentUser}>
       <div className="page">
@@ -71,9 +83,17 @@ function App() {
           onCardClick = {handleCardClick}
         />
 
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+        />
 
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}
+        />
 
         <PopupWithForm
           name="place"
