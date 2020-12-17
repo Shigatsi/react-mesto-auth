@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import Main from './Main';
+import EditProfilePopup from './EditProfilePopup';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import Footer from './Footer';
@@ -71,18 +72,7 @@ function App() {
           <span className='popup__input-error' id='popup_link-input-error'></span>
         </PopupWithForm>
 
-        <PopupWithForm
-          name="profile"
-          title="Редактировать профиль"
-          submited = "Сохранить"
-          isOpen={isEditProfilePopupOpen}
-          onClose = {closeAllPopups}
-        >
-          <input type="text" id="popup_name" name="name" minLength="2" maxLength="40" pattern="[а-яёА-ЯЁA-Za-z \-]*" required placeholder="Имя, Фамилия" className="popup__input"/>
-          <span className='popup__input-error popup__input-error_hidden' id='popup_name-input-error'></span>
-          <input type="text" id="popup_lifestyle" name="about" minLength="2" maxLength="200" required placeholder="Род занятий/хобби" className="popup__input"/>
-          <span className='popup__input-error popup__input-error_hidden' id='popup_lifestyle-input-error'></span>
-        </PopupWithForm>
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
 
         <PopupWithForm
           name="place"
