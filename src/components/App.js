@@ -52,8 +52,8 @@ function App() {
     });
   }
 
+
   function handleCardDelete(card){
-  console.log(card)
   api.deleteCard(card.cardId).then(()=>{
     // Формируем новый массив на основе имеющегося, удоляя карточку
     const newCards = cards.filter(с=>{return с.cardId!==card.cardId});
@@ -111,21 +111,26 @@ function App() {
 
   function handleUpdateAvatar (avatarUrl) {
     api.patchUserAvatar(avatarUrl).then((userData)=>{
-      console.log(avatarUrl)
-      console.log(currentUser)
       setCurrentUser(userData)
       closeAllPopups ();
     })
   }
 
 
-//   Добавьте обработчик handleAddPlaceSubmit. После завершения API-запроса внутри него обновите стейт cards с помощью расширенной копии текущего массива — используйте оператор ...:
-// setCards([newCard, ...cards]);
-// Не забудьте про handleSubmit и onAddPlace для нового компонента AddPlacePopup. В этот раз вы можете использовать как управляемые компоненты, так и рефы для получения значений инпутов — на ваше усмотрение.
+  function handleAddPlaceSubmit (popupData) {
+    api.postNewCadr(popupData).then((item)=>{
+      const newCard = {
+        cardId:item._id,
+        userId:item.owner._id,
+        src:item.link,
+        title:item.name,
+        likes:item.likes,
+        alt: item.name
+      }
+      setCards([newCard, ...cards])
+    })
 
-
-  function handleAddPlaceSubmit () {
-    console.log('lol')
+    closeAllPopups ();
   }
 
   return (

@@ -3,12 +3,33 @@ import PopupWithForm from './PopupWithForm';
 
 function AddPlacePopup({isOpen, onClose, onAddPlace}) {
 
+  const [place, setPlace] = React.useState([]);
+  const [placeUrl, setPlaceUrl] = React.useState([]);
+
+  React.useEffect(()=>{
+    setPlace(place);
+    setPlaceUrl(placeUrl);
+  })
+
+  function handleChangePlace (evt) {
+    setPlace(evt.target.value)
+  }
+
+  function handleChangePlaceUrl (evt) {
+    setPlaceUrl(evt.target.value)
+  }
+
+
+
   function handleSubmit(e) {
     e.preventDefault();
 
-    onAddPlace({
-
+    onAddPlace(
+      {place:place,
+      place_url: placeUrl
     });
+
+    e.target.reset();
  }
 
   return(
@@ -20,9 +41,10 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
           isOpen={isOpen}
           onClose = {onClose}
         >
-          <input type="text" id="popup_place" name="place" minLength="1" maxLength="30" required placeholder="Название" className="popup__input"/>
-          <span className='popup__input-error popup__input-error_hidden' id='popup_place-input-error'></span>
-          <input type="url" id="popup_link"name="place_url" required placeholder="Ссылка на картинку" className="popup__input"/>
+          <input onChange={handleChangePlace} type="text" id="popup_place" name="place" minLength="1" maxLength="30" required placeholder="Название" className="popup__input"/>
+          <span className='popup__input-error popup__input-error_hidden'
+          id='popup_place-input-error'></span>
+          <input type="url"  onChange={handleChangePlaceUrl}id="popup_link"name="place_url" required placeholder="Ссылка на картинку" className="popup__input"/>
           <span className='popup__input-error' id='popup_link-input-error'></span>
         </PopupWithForm>
   )
