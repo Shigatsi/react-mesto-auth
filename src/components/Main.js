@@ -1,64 +1,12 @@
 
 import React from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import api from '../utils/Api';
 import Card from './Card.js';
 
 
-function Main ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
+function Main ({onEditProfile, onAddPlace, onEditAvatar, onCardLike, onCardDelete,  onCardClick, cards}) {
 
   const currentUser = React.useContext(CurrentUserContext);
-
-  const [cards, setCards] = React.useState([]);
-
-  React.useEffect(()=>{
-    api.getInitialCards()
-    .then((Cards)=>{
-      const cards = Cards.map(item =>{
-        return{
-          cardId:item._id,
-          userId:item.owner._id,
-          src:item.link,
-          title:item.name,
-          likes:item.likes,
-          alt: item.name}
-      })
-      setCards(cards);
-
-    })
-    .catch(err => console.error(err));
-  }, [])
-
-  function handleCardLike(card) {
-      // Снова проверяем, есть ли уже лайк на этой карточке
-      const isLiked = card.likes.some(i => i._id === currentUser._id);
-      // Отправляем запрос в API и получаем обновлённые данные карточки
-      api.changeLikeCardStatus(card.cardId, !isLiked).then((item) => {
-        const newCard = {
-          cardId:item._id,
-          userId:item.owner._id,
-          src:item.link,
-          title:item.name,
-          likes:item.likes,
-          alt: item.name
-        }
-          // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
-          const newCards = cards.map((c) => c.cardId === card.cardId ? newCard : c);
-         // Обновляем стейт
-         setCards(newCards)
-      });
-  }
-
-  function handleCardDelete(card){
-    console.log(card)
-    api.deleteCard(card.cardId).then(()=>{
-      // Формируем новый массив на основе имеющегося, удоляя карточку
-      const newCards = cards.filter(с=>{return с.cardId!==card.cardId});
-      // Обновляем стейт
-      setCards(newCards)
-    })
-  }
-
 
   return (
     <main className="content">
@@ -84,8 +32,8 @@ function Main ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
               key={card.cardId}
               card={card}
               onCardClick ={onCardClick}
-              onCardLike = {handleCardLike}
-              onCardDelete={handleCardDelete}
+              onCardLike = {onCardLike}
+              onCardDelete={onCardDelete}
             />
         )}
       </section>

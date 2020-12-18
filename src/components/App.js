@@ -3,6 +3,7 @@ import Header from './Header';
 import Main from './Main';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import Footer from './Footer';
@@ -10,6 +11,56 @@ import api from '../utils/Api';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
 function App() {
+
+  const [cards, setCards] = React.useState([]);
+
+  React.useEffect(()=>{
+    api.getInitialCards()
+    .then((Cards)=>{
+      const cards = Cards.map(item =>{
+        return{
+          cardId:item._id,
+          userId:item.owner._id,
+          src:item.link,
+          title:item.name,
+          likes:item.likes,
+          alt: item.name}
+      })
+      setCards(cards);
+
+    })
+    .catch(err => console.error(err));
+  }, [])
+
+  function handleCardLike(card) {
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    api.changeLikeCardStatus(card.cardId, !isLiked).then((item) => {
+      const newCard = {
+        cardId:item._id,
+        userId:item.owner._id,
+        src:item.link,
+        title:item.name,
+        likes:item.likes,
+        alt: item.name
+      }
+        // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
+        const newCards = cards.map((c) => c.cardId === card.cardId ? newCard : c);
+      // Обновляем стейт
+      setCards(newCards)
+    });
+  }
+
+  function handleCardDelete(card){
+  console.log(card)
+  api.deleteCard(card.cardId).then(()=>{
+    // Формируем новый массив на основе имеющегося, удоляя карточку
+    const newCards = cards.filter(с=>{return с.cardId!==card.cardId});
+    // Обновляем стейт
+    setCards(newCards)
+  })
+  }
 
   const [currentUser, setCurrentUser] = React.useState({});
 
@@ -58,11 +109,6 @@ function App() {
   }
 
 
-// Используйте реф
-// На этот раз вместо управляемых компонентов используйте реф, чтобы получить прямой доступ к DOM-элементу инпута и его значению.
-
-// В App добавьте handleUpdateAvatar, вызывающий api.setUserAvatar. Не забудьте обновлять аватар локально после завершения запроса.
-
   function handleUpdateAvatar (avatarUrl) {
     api.patchUserAvatar(avatarUrl).then((userData)=>{
       console.log(avatarUrl)
@@ -72,11 +118,24 @@ function App() {
     })
   }
 
+
+//   Добавьте обработчик handleAddPlaceSubmit. После завершения API-запроса внутри него обновите стейт cards с помощью расширенной копии текущего массива — используйте оператор ...:
+// setCards([newCard, ...cards]);
+// Не забудьте про handleSubmit и onAddPlace для нового компонента AddPlacePopup. В этот раз вы можете использовать как управляемые компоненты, так и рефы для получения значений инпутов — на ваше усмотрение.
+
+
+  function handleAddPlaceSubmit () {
+    console.log('lol')
+  }
+
   return (
     <CurrentUserContext.Provider value = {currentUser}>
       <div className="page">
         <Header/>
         <Main
+          cards = {cards}
+          onCardLike = {handleCardLike}
+          onCardDelete = {handleCardDelete}
           onEditProfile = {handleEditProfileClick}
           onAddPlace = {handleEditPlaceClick}
           onEditAvatar = {handleEditAvatarClick}
@@ -95,18 +154,11 @@ function App() {
           onUpdateAvatar={handleUpdateAvatar}
         />
 
-        <PopupWithForm
-          name="place"
-          title="Новое место"
-          submited = "Сохранить"
+        <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose = {closeAllPopups}
-        >
-          <input type="text" id="popup_place" name="place" minLength="1" maxLength="30" required placeholder="Название" className="popup__input"/>
-          <span className='popup__input-error popup__input-error_hidden' id='popup_place-input-error'></span>
-          <input type="url" id="popup_link"name="place_url" required placeholder="Ссылка на картинку" className="popup__input"/>
-          <span className='popup__input-error' id='popup_link-input-error'></span>
-        </PopupWithForm>
+          onAddPlace = {handleAddPlaceSubmit}
+        />
 
         <PopupWithForm
           name = "confirm"
