@@ -108,10 +108,11 @@ function App() {
   function handleUpdateUser (currentUser) {
     api.patchUserInfo(currentUser)
     .then((updateUserInfo)=>{
-      setCurrentUser(updateUserInfo)
-      closeAllPopups ();
+      setCurrentUser(updateUserInfo);
+      closeAllPopups();
     })
     .catch(err => console.error(err));//выведем ошибку
+
   }
 
 
@@ -136,10 +137,11 @@ function App() {
         likes:item.likes,
         alt: item.name
       }
-      setCards([newCard, ...cards])
+      setCards([newCard, ...cards]);
+      closeAllPopups ();
     })
     .catch(err => console.error(err));//выведем ошибку
-    closeAllPopups ();
+
   }
 
   return (
