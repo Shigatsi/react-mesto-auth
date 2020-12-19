@@ -3,13 +3,8 @@ import PopupWithForm from './PopupWithForm';
 
 function AddPlacePopup({isOpen, onClose, onAddPlace}) {
 
-  const [place, setPlace] = React.useState([]);
-  const [placeUrl, setPlaceUrl] = React.useState([]);
-
-  React.useEffect(()=>{
-    setPlace(place);
-    setPlaceUrl(placeUrl);
-  })
+  const [place, setPlace] = React.useState('');
+  const [placeUrl, setPlaceUrl] = React.useState('');
 
   function handleChangePlace (evt) {
     setPlace(evt.target.value)
@@ -24,8 +19,8 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    onAddPlace(
-      {place:place,
+    onAddPlace({
+      place:place,
       place_url: placeUrl
     });
 
