@@ -68,9 +68,9 @@ function App() {
 
   const [currentUser, setCurrentUser] = React.useState({});
 
-  const [isEditProfilePopupOpen, onEditProfile] = React.useState(false);
-  const  [isAddPlacePopupOpen, onAddPlace] = React.useState(false);
-  const  [isEditAvatarPopupOpen, onEditAvatar] = React.useState(false);
+  const [EditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
+  const  [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const  [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
 
   React.useEffect(()=>{
     api.getUserData()
@@ -81,22 +81,22 @@ function App() {
   }, [])
 
   function closeAllPopups () {
-    onAddPlace(false);
-    onEditAvatar(false);
-    onEditProfile(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+    setIsEditProfilePopupOpen(false);
     onCardClick({});
   }
 
    function handleEditPlaceClick () {
-    onAddPlace(true);
+    setIsAddPlacePopupOpen(true);
   }
 
   function handleEditAvatarClick () {
-    onEditAvatar(true);
+    setIsEditAvatarPopupOpen(true);
    }
 
    function handleEditProfileClick () {
-    onEditProfile(true);
+     setIsEditProfilePopupOpen(true);
   }
 
   const [selectedCard, onCardClick] = React.useState({});
@@ -157,7 +157,7 @@ function App() {
         />
 
         <EditProfilePopup
-          isOpen={isEditProfilePopupOpen}
+          isOpen={EditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
         />
