@@ -113,7 +113,6 @@ class Api {
       })
     })
     .then(this._transformResJson)
-    .catch(err => console.error(err));//выведем ошибку
   }
 }
 

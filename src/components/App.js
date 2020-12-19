@@ -36,7 +36,8 @@ function App() {
     // Снова проверяем, есть ли уже лайк на этой карточке
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.changeLikeCardStatus(card.cardId, !isLiked).then((item) => {
+    api.changeLikeCardStatus(card.cardId, !isLiked)
+    .then((item) => {
       const newCard = {
         cardId:item._id,
         userId:item.owner._id,
@@ -49,17 +50,20 @@ function App() {
         const newCards = cards.map((c) => c.cardId === card.cardId ? newCard : c);
       // Обновляем стейт
       setCards(newCards)
-    });
+    })
+    .catch(err => console.error(err));//выведем ошибку;
   }
 
 
   function handleCardDelete(card){
-  api.deleteCard(card.cardId).then(()=>{
+  api.deleteCard(card.cardId)
+  .then(()=>{
     // Формируем новый массив на основе имеющегося, удоляя карточку
     const newCards = cards.filter(с=>{return с.cardId!==card.cardId});
     // Обновляем стейт
     setCards(newCards)
   })
+  .catch(err => console.error(err));//выведем ошибку
   }
 
   const [currentUser, setCurrentUser] = React.useState({});
@@ -102,23 +106,28 @@ function App() {
 
 
   function handleUpdateUser (currentUser) {
-    api.patchUserInfo(currentUser).then((updateUserInfo)=>{
+    api.patchUserInfo(currentUser)
+    .then((updateUserInfo)=>{
       setCurrentUser(updateUserInfo)
       closeAllPopups ();
     })
+    .catch(err => console.error(err));//выведем ошибку
   }
 
 
   function handleUpdateAvatar (avatarUrl) {
-    api.patchUserAvatar(avatarUrl).then((userData)=>{
+    api.patchUserAvatar(avatarUrl)
+    .then((userData)=>{
       setCurrentUser(userData)
       closeAllPopups ();
     })
+    .catch(err => console.error(err));//выведем ошибку
   }
 
 
   function handleAddPlaceSubmit (popupData) {
-    api.postNewCadr(popupData).then((item)=>{
+    api.postNewCadr(popupData)
+    .then((item)=>{
       const newCard = {
         cardId:item._id,
         userId:item.owner._id,
@@ -129,7 +138,7 @@ function App() {
       }
       setCards([newCard, ...cards])
     })
-
+    .catch(err => console.error(err));//выведем ошибку
     closeAllPopups ();
   }
 
