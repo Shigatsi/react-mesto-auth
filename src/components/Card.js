@@ -3,7 +3,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 // Теперь нужно добавить пропс onCardLike для компонента Card и задать в него эту функцию. Также добавьте в Card обработчик клика handleLikeClick и вызовите из него onCardLike с аргументом card — по аналогии с уже имеющимся обработчиком handleClick.
 
-function Card ({card, onCardClick, onCardLike, onCardDelete}) {
+function Card ({card, setSelectedCard, onCardLike, onCardDelete}) {
 
   const currentUser = React.useContext(CurrentUserContext);
 
@@ -35,7 +35,7 @@ function Card ({card, onCardClick, onCardLike, onCardDelete}) {
   return (
     <div className="elements__item">
       <button className={cardRBinButtonClassName} type="button" onClick={_=>handleRBinBtnClick(card)}></button>
-      <img className="elements__image" src={card.src}  alt={card.title} onClick={_=>onCardClick(card)}/>
+      <img className="elements__image" src={card.src}  alt={card.title} onClick={_=>setSelectedCard(card)}/>
       <div className="elements__bar">
         <h2 className="elements__title">{card.title}</h2>
         <div className="elements__like-bar">
