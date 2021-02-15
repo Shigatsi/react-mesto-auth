@@ -13,6 +13,7 @@ import api from '../utils/Api';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 import Login from './Login';
 import Register from './Register';
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
 
@@ -164,8 +165,7 @@ function App() {
           <Route path='/sign-in'>
             <Login />
           </Route>
-          <Route exact path = '/'> {
-            loggedIn ?
+          <ProtectedRoute path = '/'> {
               <Main
                 cards = {cards}
                 onCardLike = {handleCardLike}
@@ -174,9 +174,10 @@ function App() {
                 onAddPlace = {handleEditPlaceClick}
                 onEditAvatar = {handleEditAvatarClick}
                 setSelectedCard = {handleCardClick}
-              /> : <Redirect to="/sign-in" />
+                loggedIn = {loggedIn}
+              />
             }
-          </Route>
+          </ProtectedRoute>
         </Switch>
 
         <EditProfilePopup
