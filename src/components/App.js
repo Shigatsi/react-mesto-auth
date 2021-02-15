@@ -12,6 +12,7 @@ import Footer from './Footer';
 import api from '../utils/Api';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 import Login from './Login';
+import Register from './Register';
 
 function App() {
 
@@ -157,18 +158,14 @@ function App() {
 
           {/* роут для регистрации пользователя */}
           <Route path='/sign-up'>
-            <div style={{
-                color: 'green',
-                width: '600',
-                height:'500'
-            }} > роут для регистрации пользователя </div>
+            <Register />
           </Route>
           {/* роут для авторизации пользователя */}
           <Route path='/sign-in'>
             <Login />
           </Route>
           <Route exact path = '/'> {
-            !loggedIn ?
+            loggedIn ?
               <Main
                 cards = {cards}
                 onCardLike = {handleCardLike}

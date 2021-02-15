@@ -13,7 +13,7 @@
 @import url(./__fullsize-img-container/popup__fullsize-img-container.css);
 @import url(./__fullsize-img-caption/popup__fullsize-img-caption.css);
 @import url(./__fullsize-img/popup__fullsize-img.css);
-
+@import url(./__link/popup__link.css);
 
 
 .popup{

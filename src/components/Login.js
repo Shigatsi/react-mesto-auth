@@ -49,7 +49,7 @@ function Login (...props) {
         className='popup__input-error popup__input-error_hidden'
         id='login_email-input-error'></span>
       <input
-        type="text"
+        type="password"
         id="login_pass"
         name="pass"
         minLength="6"
