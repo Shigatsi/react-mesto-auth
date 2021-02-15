@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
 import EditProfilePopup from './EditProfilePopup';
@@ -12,6 +12,8 @@ import api from '../utils/Api';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
 function App() {
+
+  const [loggedIn, setLoggedIn] = React.useState(false);
 
   const [cards, setCards] = React.useState([]);
 
@@ -68,7 +70,6 @@ function App() {
   }
 
   const [currentUser, setCurrentUser] = React.useState({});
-
   const [EditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const  [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const  [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
@@ -148,8 +149,10 @@ function App() {
   return (
     <CurrentUserContext.Provider value = {currentUser}>
       <div className="page">
-        <Header/>
+        {!loggedIn ? <h2>Another HEADER</h2> : <Header/>}
+    {console.log(loggedIn)}
         <Switch>
+
           {/* роут для регистрации пользователя */}
           <Route path='/sign-up'>
             <div style={{
@@ -166,16 +169,18 @@ function App() {
                 height:'500'
             }} > роут для авторизации пользователя </div>
           </Route>
-          <Route path = '/'>
-            <Main
-              cards = {cards}
-              onCardLike = {handleCardLike}
-              onCardDelete = {handleCardDelete}
-              onEditProfile = {handleEditProfileClick}
-              onAddPlace = {handleEditPlaceClick}
-              onEditAvatar = {handleEditAvatarClick}
-              setSelectedCard = {handleCardClick}
-            />
+          <Route exact path = '/'> {
+            loggedIn ?
+              <Main
+                cards = {cards}
+                onCardLike = {handleCardLike}
+                onCardDelete = {handleCardDelete}
+                onEditProfile = {handleEditProfileClick}
+                onAddPlace = {handleEditPlaceClick}
+                onEditAvatar = {handleEditAvatarClick}
+                setSelectedCard = {handleCardClick}
+              /> : <Redirect to="/sign-in" />
+            }
           </Route>
         </Switch>
 
@@ -207,8 +212,7 @@ function App() {
         </PopupWithForm>
 
         <ImagePopup setSelectedCard={handleCardClick} card = {selectedCard || ''} onClose = {closeAllPopups}/> */
-
-        <Footer/>
+        { loggedIn && <Footer/>}
     </div>
   </CurrentUserContext.Provider>
 
