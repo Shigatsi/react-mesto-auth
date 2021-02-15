@@ -1,4 +1,5 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
 import EditProfilePopup from './EditProfilePopup';
@@ -148,15 +149,35 @@ function App() {
     <CurrentUserContext.Provider value = {currentUser}>
       <div className="page">
         <Header/>
-        <Main
-          cards = {cards}
-          onCardLike = {handleCardLike}
-          onCardDelete = {handleCardDelete}
-          onEditProfile = {handleEditProfileClick}
-          onAddPlace = {handleEditPlaceClick}
-          onEditAvatar = {handleEditAvatarClick}
-          setSelectedCard = {handleCardClick}
-        />
+        <Switch>
+          {/* роут для регистрации пользователя */}
+          <Route path='/sign-up'>
+            <div style={{
+                color: 'green',
+                width: '600',
+                height:'500'
+            }} > роут для регистрации пользователя </div>
+          </Route>
+          {/* роут для авторизации пользователя */}
+          <Route path='/sign-in'>
+          <div style={{
+                color: 'yellow',
+                width: '600',
+                height:'500'
+            }} > роут для авторизации пользователя </div>
+          </Route>
+          <Route path = '/'>
+            <Main
+              cards = {cards}
+              onCardLike = {handleCardLike}
+              onCardDelete = {handleCardDelete}
+              onEditProfile = {handleEditProfileClick}
+              onAddPlace = {handleEditPlaceClick}
+              onEditAvatar = {handleEditAvatarClick}
+              setSelectedCard = {handleCardClick}
+            />
+          </Route>
+        </Switch>
 
         <EditProfilePopup
           isOpen={EditProfilePopupOpen}
