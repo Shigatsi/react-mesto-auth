@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
+//импорт компонентов
 import Header from './Header';
 import Main from './Main';
 import EditProfilePopup from './EditProfilePopup';
@@ -10,6 +11,7 @@ import ImagePopup from './ImagePopup';
 import Footer from './Footer';
 import api from '../utils/Api';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
+import Login from './Login';
 
 function App() {
 
@@ -163,14 +165,10 @@ function App() {
           </Route>
           {/* роут для авторизации пользователя */}
           <Route path='/sign-in'>
-          <div style={{
-                color: 'yellow',
-                width: '600',
-                height:'500'
-            }} > роут для авторизации пользователя </div>
+            <Login />
           </Route>
           <Route exact path = '/'> {
-            loggedIn ?
+            !loggedIn ?
               <Main
                 cards = {cards}
                 onCardLike = {handleCardLike}
