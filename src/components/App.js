@@ -14,6 +14,7 @@ import {CurrentUserContext} from '../contexts/CurrentUserContext';
 import Login from './Login';
 import Register from './Register';
 import ProtectedRoute from "./ProtectedRoute";
+import InfoTooltip from "./InfoTooltip";
 
 function App() {
 
@@ -77,6 +78,7 @@ function App() {
   const [EditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const  [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const  [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState (false);
 
   React.useEffect(()=>{
     api.getUserData()
@@ -91,6 +93,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setSelectedCard({});
+    setIsInfoTooltipOpen(false);
   }
 
    function handleEditPlaceClick () {
@@ -150,6 +153,10 @@ function App() {
 
   }
 
+  function handleInfoTooltipOpen() {
+    setIsInfoTooltipOpen(true);
+  }
+
   return (
     <CurrentUserContext.Provider value = {currentUser}>
       <div className="page">
@@ -207,7 +214,11 @@ function App() {
         >
         </PopupWithForm>
 
-        <ImagePopup setSelectedCard={handleCardClick} card = {selectedCard || ''} onClose = {closeAllPopups}/> */
+        <ImagePopup setSelectedCard={handleCardClick} card = {selectedCard || ''} onClose = {closeAllPopups}/>
+        <InfoTooltip
+          isOpen = {isInfoTooltipOpen}
+          onClose = {closeAllPopups}
+        />
         { loggedIn && <Footer/>}
     </div>
   </CurrentUserContext.Provider>
