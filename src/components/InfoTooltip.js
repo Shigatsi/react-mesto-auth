@@ -1,9 +1,8 @@
 import succesImg from "../images/successImg.svg";
 import errorImg from "../images/errorImg.svg";
 
-function InfoTooltip ({isOpen, onClose, ...props}) {
+function InfoTooltip ({isOpen, onClose, isSuccess, ...props}) {
 
-  const isSuccess=true;  //isSuccess,
   const succesMsg = "Вы успешно зарегистрировались!";
   const errorMsg = "Что-то пошло не так! Попробуйте ещё раз."
 

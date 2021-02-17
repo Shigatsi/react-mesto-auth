@@ -29,6 +29,7 @@ function Register (...props) {
       submited = "Зарегистрироваться"
       isAuth = {true}
       isOpen={true}
+      isRegister={true}
       onSubmit = {handleSubmit}
     >
       <input

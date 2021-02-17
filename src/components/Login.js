@@ -29,6 +29,7 @@ function Login (...props) {
       submited = "Войти"
       isAuth = {true}
       isOpen={true}
+      isRegister={false}
       onSubmit = {handleSubmit}
     >
       <input
