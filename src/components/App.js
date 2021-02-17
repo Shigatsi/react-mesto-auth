@@ -160,7 +160,7 @@ function App() {
   return (
     <CurrentUserContext.Provider value = {currentUser}>
       <div className="page">
-        {!loggedIn ? <h2>Another HEADER</h2> : <Header/>}
+        {loggedIn ? <h2>Another HEADER</h2> : <Header/>}
     {console.log(loggedIn)}
         <Switch>
 

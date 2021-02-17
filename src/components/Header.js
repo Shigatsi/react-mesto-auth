@@ -1,29 +1,29 @@
+import React from 'react';
+import { Route, Link } from 'react-router-dom';
 import mestoLogo from '../images/logo.svg';
 
 function Header (...props) {
   return (
     <header className="header">
         <img className="header__logo" src={mestoLogo} alt="Логотип Mesto Russia"/>
-        {/* <Route exact path= "/">
-
-        </Route> */}
+        <Route exact path= "/">
+          <div className = "header__info">
+            <p className="header__user-login">asd@mail.com</p>
+            <Link to = "/sign-in" className="header__link"> Выйти </Link>
+          </div>
+        </Route>
+        <Route path="/sign-up">
+          <div className = "header__info">
+            <Link to = "/sign-in" className="header__link"> Войти </Link>
+          </div>
+        </Route>
+        <Route path="/sign-in">
+          <div className = "header__info">
+            <Link to = "/sign-up" className="header__link"> Регистрация </Link>
+          </div>
+        </Route>
     </header>
   )
 };
 
 export default Header;
-
-
-{/* <header>
-  <img ... />
-  <Route exact path="/">
-     email
-     button
-  </Route>
-  <Route path="/signup">
-    <Link to="signin>
-  </Route>
-  <Route path="/signin">
-    <Link to="signup">
-  </Route>
-</header> */}
