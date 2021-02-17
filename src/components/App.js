@@ -15,10 +15,35 @@ import Login from './Login';
 import Register from './Register';
 import ProtectedRoute from "./ProtectedRoute";
 import InfoTooltip from "./InfoTooltip";
+import * as mestoAuth from '../mestoAuth';
 
 function App() {
 
   const [loggedIn, setLoggedIn] = React.useState(false);
+
+  React.useEffect(() => {
+    tockenCheck();
+  }, [loggedIn]);
+
+    const handleLogin = () => {
+    setLoggedIn(true);
+  }
+
+  const handleRegister= (data) => {
+    const {email,pass} =data;
+    mestoAuth.register(email, pass)
+     .then((res)=>{
+       debugger;
+     })
+  }
+
+  const tockenCheck =()=> {
+    console.log(localStorage.getItem('jwt'));
+    if (localStorage.getItem('jwt')) {
+      let jwt = localStorage.getItem('jwt');
+    }
+  }
+
 
   const [cards, setCards] = React.useState([]);
 
@@ -160,13 +185,14 @@ function App() {
   return (
     <CurrentUserContext.Provider value = {currentUser}>
       <div className="page">
-        {loggedIn ? <h2>Another HEADER</h2> : <Header/>}
-    {console.log(loggedIn)}
+        <Header/>
         <Switch>
 
           {/* роут для регистрации пользователя */}
           <Route path='/sign-up'>
-            <Register />
+            <Register
+              onRegister = {handleRegister}
+            />
           </Route>
           {/* роут для авторизации пользователя */}
           <Route path='/sign-in'>

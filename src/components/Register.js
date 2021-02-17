@@ -1,7 +1,8 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
+import mestoAuth from "../mestoAuth";
 
-function Register (...props) {
+function Register ({onRegister, ...props}) {
   const [data, setData] = React.useState({
     email: '',
     pass: ''
@@ -18,8 +19,13 @@ function Register (...props) {
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
     e.preventDefault();
-
     //here wilbe smth else handleLogin
+    if(data) {
+      console.log({data});
+      onRegister(data);
+
+    }
+    return
   }
 
   return (

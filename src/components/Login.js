@@ -18,7 +18,8 @@ function Login (...props) {
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
     e.preventDefault();
-
+    let { email, pass } = data;
+    console.log({email, pass})
     //here wilbe smth else handleLogin
   }
 
