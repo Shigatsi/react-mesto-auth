@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
+import { Switch, Route, useHistory } from 'react-router-dom';
 //импорт компонентов
 import Header from './Header';
 import Main from './Main';
@@ -31,12 +31,8 @@ function App() {
   React.useEffect(() => {
     if(loggedIn) {
       history.push('/')
-      console.log('loggedIN!')
     }
-    // tockenCheck();
   }, [loggedIn]);
-
-
 
   const handleRegister= (data) => {
     const {email,password} =data;
@@ -58,7 +54,6 @@ function App() {
     .then((res)=>{
       localStorage.setItem('token', res.token)
       setLoggedIn(true)
-      console.log('from handleLogin!',loggedIn)
       history.push('/')
     })
     .catch(err => console.error(err));//выведем ошибку;
@@ -66,16 +61,20 @@ function App() {
 
   function tockenCheck () {
     let jwt = localStorage.getItem('token');
-    console.log(localStorage.getItem('token'));
     if (jwt) {
       mestoAuth.getToken(jwt)
       .then((res)=> {
-        console.log('from tocken check!',res.data.email)
         setUserEmail(res.data.email)
         setLoggedIn(true)
       })
       .catch(err => console.error(err));//выведем ошибку;
     }
+  }
+
+  const hadleLogout = ()=>{
+    setLoggedIn(false);
+    localStorage.removeItem('token');
+    setUserEmail('')
   }
 
 
@@ -217,6 +216,7 @@ function App() {
       <div className="page">
         <Header
           userEmail={userEmail}
+          logOut = {hadleLogout}
         />
         <Switch>
 

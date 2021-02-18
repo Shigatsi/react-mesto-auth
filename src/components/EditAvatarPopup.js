@@ -28,7 +28,7 @@ function EditAvatarPopup ({isOpen, onClose, onUpdateAvatar}) {
       <input
         ref = {avatarRef}
         type="url"
-        id="popup_link"
+        id="popup_link_avatar"
         name="avatar_url"
         required
         placeholder="Ссылка на аватар"
