@@ -1,10 +1,10 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
 
-function Login (...props) {
+function Login ({onLogin, ...props}) {
   const [data, setData] = React.useState({
     email: '',
-    pass: ''
+    password: ''
   });
 
   const handleChange = (e) => {
@@ -18,9 +18,10 @@ function Login (...props) {
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
     e.preventDefault();
-    let { email, pass } = data;
-    console.log({email, pass})
-    //here wilbe smth else handleLogin
+    if(data) {
+      onLogin(data);
+    }
+    return
   }
 
   return (
@@ -39,7 +40,7 @@ function Login (...props) {
         name="email"
         minLength="2"
         maxLength="40"
-        pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+        // pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
         required
         placeholder="Email"
         className="popup__input_theme_auth popup__input"
@@ -53,11 +54,11 @@ function Login (...props) {
       <input
         type="password"
         id="login_pass"
-        name="pass"
+        name="password"
         minLength="6"
         maxLength="200"
         required
-        value = {data.pass}
+        value = {data.password}
         onChange={handleChange}
         placeholder="Пароль"
         className="popup__input_theme_auth popup__input"

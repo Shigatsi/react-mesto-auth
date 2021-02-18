@@ -19,20 +19,24 @@ import * as mestoAuth from '../mestoAuth';
 
 function App() {
   const history = useHistory();
+
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [userEmail, setUserEmail] = React.useState('');
   const [succes, isSucces] = React.useState(false);
+
   React.useEffect(() => {
     tockenCheck();
   }, []);
 
-  // React.useEffect(() => {
-  //   tockenCheck();
-  // }, [loggedIn]);
+  React.useEffect(() => {
+    if(loggedIn) {
+      history.push('/')
+      console.log('loggedIN!')
+    }
+    // tockenCheck();
+  }, [loggedIn]);
 
-    const handleLogin = () => {
-    setLoggedIn(true);
-  }
+
 
   const handleRegister= (data) => {
     const {email,password} =data;
@@ -48,11 +52,29 @@ function App() {
     })
   }
 
-  const tockenCheck =()=> {
+  function handleLogin (data) {
+    const {email,password} =data;
+    mestoAuth.authorize(email, password)
+    .then((res)=>{
+      localStorage.setItem('token', res.token)
+      setLoggedIn(true)
+      console.log('from handleLogin!',loggedIn)
+      history.push('/')
+    })
+    .catch(err => console.error(err));//выведем ошибку;
+  }
 
-    if (localStorage.getItem('jwt')) {
-      let jwt = localStorage.getItem('jwt');
-      console.log(localStorage.getItem('jwt'));
+  function tockenCheck () {
+    let jwt = localStorage.getItem('token');
+    console.log(localStorage.getItem('token'));
+    if (jwt) {
+      mestoAuth.getToken(jwt)
+      .then((res)=> {
+        console.log('from tocken check!',res.data.email)
+        setUserEmail(res.data.email)
+        setLoggedIn(true)
+      })
+      .catch(err => console.error(err));//выведем ошибку;
     }
   }
 
@@ -190,14 +212,12 @@ function App() {
 
   }
 
-  function handleInfoTooltipOpen() {
-    setIsInfoTooltipOpen(true);
-  }
-
   return (
     <CurrentUserContext.Provider value = {currentUser}>
       <div className="page">
-        <Header/>
+        <Header
+          userEmail={userEmail}
+        />
         <Switch>
 
           {/* роут для регистрации пользователя */}
@@ -208,20 +228,22 @@ function App() {
           </Route>
           {/* роут для авторизации пользователя */}
           <Route path='/sign-in'>
-            <Login />
+            <Login
+              onLogin = {handleLogin}
+              tockenCheck = {tockenCheck}
+            />
           </Route>
-          <ProtectedRoute path = '/'> {
-              <Main
-                cards = {cards}
-                onCardLike = {handleCardLike}
-                onCardDelete = {handleCardDelete}
-                onEditProfile = {handleEditProfileClick}
-                onAddPlace = {handleEditPlaceClick}
-                onEditAvatar = {handleEditAvatarClick}
-                setSelectedCard = {handleCardClick}
-                loggedIn = {loggedIn}
-              />
-            }
+          <ProtectedRoute exact path = '/'
+            loggedIn = {loggedIn}
+            cards = {cards}
+            onCardLike = {handleCardLike}
+            onCardDelete = {handleCardDelete}
+            onEditProfile = {handleEditProfileClick}
+            onAddPlace = {handleEditPlaceClick}
+            onEditAvatar = {handleEditAvatarClick}
+            setSelectedCard = {handleCardClick}
+            component = {Main}
+          >
           </ProtectedRoute>
         </Switch>
 
