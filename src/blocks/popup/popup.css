@@ -14,6 +14,9 @@
 @import url(./__fullsize-img-caption/popup__fullsize-img-caption.css);
 @import url(./__fullsize-img/popup__fullsize-img.css);
 @import url(./__link/popup__link.css);
+@import url(./__tooltip-img/popup__toltip-img.css);
+@import url(./__tooltip-img-container/popup__tooltip-img-container.css);
+@import url(./__tooltip-img-caption/popup__tooltip-img-caption.css);
 
 
 .popup{

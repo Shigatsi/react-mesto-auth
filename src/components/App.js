@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 //импорт компонентов
 import Header from './Header';
 import Main from './Main';
@@ -14,33 +14,45 @@ import {CurrentUserContext} from '../contexts/CurrentUserContext';
 import Login from './Login';
 import Register from './Register';
 import ProtectedRoute from "./ProtectedRoute";
-import InfoTooltip from "./InfoTooltip";
+import InfoTooltip from './InfoTooltip';
 import * as mestoAuth from '../mestoAuth';
 
 function App() {
-
+  const history = useHistory();
   const [loggedIn, setLoggedIn] = React.useState(false);
-
+  const [userEmail, setUserEmail] = React.useState('');
+  const [succes, isSucces] = React.useState(false);
   React.useEffect(() => {
     tockenCheck();
-  }, [loggedIn]);
+  }, []);
+
+  // React.useEffect(() => {
+  //   tockenCheck();
+  // }, [loggedIn]);
 
     const handleLogin = () => {
     setLoggedIn(true);
   }
 
   const handleRegister= (data) => {
-    const {email,pass} =data;
-    mestoAuth.register(email, pass)
-     .then((res)=>{
-       debugger;
-     })
+    const {email,password} =data;
+     mestoAuth.register(email, password)
+    .then(()=>{
+      setIsInfoTooltipOpen(true);
+      isSucces(true);
+      history.push('/sign-in');
+    })
+    .catch(()=>{
+      isSucces(false);
+      setIsInfoTooltipOpen(true);
+    })
   }
 
   const tockenCheck =()=> {
-    console.log(localStorage.getItem('jwt'));
+
     if (localStorage.getItem('jwt')) {
       let jwt = localStorage.getItem('jwt');
+      console.log(localStorage.getItem('jwt'));
     }
   }
 
@@ -244,6 +256,7 @@ function App() {
         <InfoTooltip
           isOpen = {isInfoTooltipOpen}
           onClose = {closeAllPopups}
+          isSuccess= {succes}
         />
         { loggedIn && <Footer/>}
     </div>

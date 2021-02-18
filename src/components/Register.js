@@ -1,11 +1,10 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
-import mestoAuth from "../mestoAuth";
 
 function Register ({onRegister, ...props}) {
   const [data, setData] = React.useState({
     email: '',
-    pass: ''
+    password: ''
   });
 
   const handleChange = (e) => {
@@ -21,9 +20,7 @@ function Register ({onRegister, ...props}) {
     e.preventDefault();
     //here wilbe smth else handleLogin
     if(data) {
-      console.log({data});
       onRegister(data);
-
     }
     return
   }
@@ -44,7 +41,7 @@ function Register ({onRegister, ...props}) {
         name="email"
         minLength="2"
         maxLength="40"
-        pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+        // pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
         required
         placeholder="Email"
         className="popup__input_theme_auth popup__input"
@@ -58,11 +55,11 @@ function Register ({onRegister, ...props}) {
       <input
         type="password"
         id="register_pass"
-        name="pass"
+        name="password"
         minLength="6"
         maxLength="200"
         required
-        value = {data.pass}
+        value = {data.password}
         onChange={handleChange}
         placeholder="Пароль"
         className="popup__input_theme_auth popup__input"
