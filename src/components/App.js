@@ -60,7 +60,7 @@ function App() {
   }
 
   function tockenCheck () {
-    let jwt = localStorage.getItem('token');
+    const jwt = localStorage.getItem('token');
     if (jwt) {
       mestoAuth.getToken(jwt)
       .then((res)=> {
