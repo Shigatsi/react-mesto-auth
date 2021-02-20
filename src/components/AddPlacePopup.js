@@ -22,9 +22,13 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
     onAddPlace({
       place:place,
       place_url: placeUrl
-    });
+    }
+    );
 
-    e.target.reset();
+    //  e.target.reset();
+    setPlaceUrl('');
+    setPlace('');
+
  }
 
   return(
@@ -36,10 +40,10 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
           isOpen={isOpen}
           onClose = {onClose}
         >
-          <input onChange={handleChangePlace} type="text" id="popup_place" name="place" minLength="1" maxLength="30" required placeholder="Название" className="popup__input"/>
+          <input onChange={handleChangePlace} type="text" id="popup_place" value={place} name="place" minLength="1" maxLength="30" required placeholder="Название" className="popup__input"/>
           <span className='popup__input-error popup__input-error_hidden'
           id='popup_place-input-error'></span>
-          <input type="url"  onChange={handleChangePlaceUrl}id="popup_link"name="place_url" required placeholder="Ссылка на картинку" className="popup__input"/>
+          <input type="url" value={placeUrl}  onChange={handleChangePlaceUrl}id="popup_link"name="place_url" required placeholder="Ссылка на картинку" className="popup__input"/>
           <span className='popup__input-error' id='popup_link-input-error'></span>
         </PopupWithForm>
   )
