@@ -82,8 +82,8 @@ function App() {
 
   React.useEffect(()=>{
     api.getInitialCards()
-    .then((Cards)=>{
-      const cards = Cards.map(item =>{
+    .then((initCards)=>{
+      const cards = initCards.map(item =>{
         return{
           cardId:item._id,
           userId:item.owner._id,
