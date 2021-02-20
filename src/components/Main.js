@@ -35,7 +35,7 @@ function Main ({onEditProfile, onAddPlace, onEditAvatar, onCardLike, onCardDelet
               onCardLike = {onCardLike}
               onCardDelete={onCardDelete}
             />
-        )
+          )
         )}
       </section>
     </main>
