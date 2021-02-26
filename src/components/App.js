@@ -81,9 +81,10 @@ function App() {
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(()=>{
-    api.getInitialCards()
+    api
+    .getInitialCards()
     .then((initCards)=>{
-      const cards = initCards.map(item =>{
+      const cards = initCards.data.map(item =>{
         return{
           cardId:item._id,
           userId:item.owner._id,
@@ -141,7 +142,8 @@ function App() {
   React.useEffect(()=>{
     api.getUserData()
     .then((userData)=>{
-      setCurrentUser(userData);
+      debugger;
+      setCurrentUser(userData.data);
     })
     .catch(err => console.error(err));//выведем ошибку
   }, [])
@@ -186,7 +188,7 @@ function App() {
   function handleUpdateAvatar (avatarUrl) {
     api.patchUserAvatar(avatarUrl)
     .then((userData)=>{
-      setCurrentUser(userData)
+      setCurrentUser(userData.data)
       closeAllPopups ();
     })
     .catch(err => console.error(err));//выведем ошибку

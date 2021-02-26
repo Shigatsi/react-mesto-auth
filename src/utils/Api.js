@@ -117,8 +117,10 @@ class Api {
 }
 
 const api = new Api  ({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
-  headers: 'cf883479-ba69-4170-b793-165731887c32',
+  // baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
+  baseUrl: 'http://localhost:3000',
+  headers: `Bearer ${localStorage.getItem('token')}`
+
 })
 
 export default api;
