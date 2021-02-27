@@ -61,8 +61,11 @@ class Api {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      name: popupData.place,
-      link:popupData.place_url
+      // name: popupData.place,
+      // link:popupData.place_url
+      name: popupData.name,
+      link:popupData.link
+
       })
     })
     .then(this._transformResJson)
@@ -82,7 +85,9 @@ class Api {
   //публичный метод постановки и удоления лайка
   changeLikeCardStatus (cardId, isLiked) {
      if (isLiked) {
-      return fetch (this.baseUrl + '/cards/likes/' + cardId, {
+      // return fetch (this.baseUrl + '/cards/likes/' + cardId,
+      return fetch (this.baseUrl + '/cards/'+ cardId + '/likes/' ,
+      {
         method: 'PUT',
         headers: {
           authorization: this.headers,
@@ -90,7 +95,8 @@ class Api {
       })
       .then(this._transformResJson)
       } else {
-        return fetch (this.baseUrl + '/cards/likes/' + cardId, {
+        // return fetch (this.baseUrl + '/cards/likes/' + cardId,
+        return fetch (this.baseUrl + '/cards/'+ cardId + '/likes/' ,{
           method: 'DELETE',
           headers: {
             authorization: this.headers,
@@ -104,13 +110,15 @@ class Api {
   patchUserAvatar (userAvatarUrl) {
     return fetch (this.baseUrl + '/users/me/avatar/', {
       method: 'PATCH',
+      mode: 'cors',
       headers: {
-      'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
         authorization: this.headers,
       },
       body: JSON.stringify({
         avatar: userAvatarUrl,
-      })
+      }),
+
     })
     .then(this._transformResJson)
   }

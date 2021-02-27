@@ -52,6 +52,7 @@ function App() {
     const {email,password} =data;
     mestoAuth.authorize(email, password)
     .then((res)=>{
+      window.location.reload();//обновляю страницу, чтобы новый юзер отобразился
       localStorage.setItem('token', res.token)
       setLoggedIn(true)
       history.push('/')
@@ -84,15 +85,23 @@ function App() {
     api
     .getInitialCards()
     .then((initCards)=>{
-      const cards = initCards.data.map(item =>{
+      const cardsNotSort = initCards.data.map(item =>{
+        console.log(item.name, item.createdAt)
         return{
           cardId:item._id,
-          userId:item.owner._id,
+          userId:item.owner,
           src:item.link,
           title:item.name,
           likes:item.likes,
-          alt: item.name}
+          alt: item.name,
+          data: item.createdAt,
+        }
       })
+      debugger;
+      const cards = cardsNotSort.sort(function(a, b) {
+        return a.data < b.data ? 1 : -1
+      })
+      debugger;
       setCards(cards);
 
     })
@@ -101,18 +110,18 @@ function App() {
 
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(id => id === currentUser._id);
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api.changeLikeCardStatus(card.cardId, !isLiked)
-    .then((item) => {
-      const newCard = {
-        cardId:item._id,
-        userId:item.owner._id,
-        src:item.link,
-        title:item.name,
-        likes:item.likes,
-        alt: item.name
-      }
+      .then((item) => {
+      const newCard =  {
+          cardId:item.data._id,
+          userId:item.data.owner,
+          src:item.data.link,
+          title:item.data.name,
+          likes:item.data.likes,
+          alt: item.data.name
+        }
         // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
         const newCards = cards.map((c) => c.cardId === card.cardId ? newCard : c);
       // Обновляем стейт
@@ -142,7 +151,6 @@ function App() {
   React.useEffect(()=>{
     api.getUserData()
     .then((userData)=>{
-      debugger;
       setCurrentUser(userData.data);
     })
     .catch(err => console.error(err));//выведем ошибку
@@ -177,7 +185,7 @@ function App() {
   function handleUpdateUser (currentUser) {
     api.patchUserInfo(currentUser)
     .then((updateUserInfo)=>{
-      setCurrentUser(updateUserInfo);
+      setCurrentUser(updateUserInfo.data);
       closeAllPopups();
     })
     .catch(err => console.error(err));//выведем ошибку
@@ -199,12 +207,12 @@ function App() {
     api.postNewCadr(popupData)
     .then((item)=>{
       const newCard = {
-        cardId:item._id,
-        userId:item.owner._id,
-        src:item.link,
-        title:item.name,
-        likes:item.likes,
-        alt: item.name
+        cardId:item.data._id,
+        userId:item.data.owner,
+        src:item.data.link,
+        title:item.data.name,
+        likes:item.data.likes,
+        alt: item.data.name
       }
       setCards([newCard, ...cards]);
       closeAllPopups ();

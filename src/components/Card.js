@@ -25,7 +25,7 @@ function Card ({card, setSelectedCard, onCardLike, onCardDelete}) {
   );
 
   // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
-  const isLiked = card.likes.some(i => i._id === currentUser._id);
+  const isLiked = card.likes.some(id => id === currentUser._id);
 
   // Создаём переменную, которую после зададим в `className` для кнопки лайка
   const cardLikeButtonClassName = (
@@ -41,6 +41,7 @@ function Card ({card, setSelectedCard, onCardLike, onCardDelete}) {
         <div className="elements__like-bar">
           <button className={cardLikeButtonClassName} type="button" onClick={_=>handleLikeClick(card)} ></button>
           <p className="elements__like-counter">{card.likes.length}</p>
+          <p style={{fontSize: "13px"}}>{card.data}</p>
         </div>
         </div>
       </div>

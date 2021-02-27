@@ -20,8 +20,10 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
     e.preventDefault();
 
     onAddPlace({
-      place:place,
-      place_url: placeUrl
+    //   place:place,
+    //   place_url: placeUrl
+      name:place,
+      link: placeUrl
     }
     );
 
