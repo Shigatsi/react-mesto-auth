@@ -52,10 +52,10 @@ function App() {
     const {email,password} =data;
     mestoAuth.authorize(email, password)
     .then((res)=>{
-      window.location.reload();//обновляю страницу, чтобы новый юзер отобразился
       localStorage.setItem('token', res.token)
       setLoggedIn(true)
       history.push('/')
+      window.location.reload();//обновляю страницу, чтобы новый юзер отобразился
     })
     .catch(err => console.error(err));//выведем ошибку;
   }
