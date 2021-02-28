@@ -86,7 +86,6 @@ function App() {
     .getInitialCards()
     .then((initCards)=>{
       const cardsNotSort = initCards.data.map(item =>{
-        console.log(item.name, item.createdAt)
         return{
           cardId:item._id,
           userId:item.owner,
