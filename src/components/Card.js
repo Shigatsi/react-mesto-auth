@@ -41,7 +41,6 @@ function Card ({card, setSelectedCard, onCardLike, onCardDelete}) {
         <div className="elements__like-bar">
           <button className={cardLikeButtonClassName} type="button" onClick={_=>handleLikeClick(card)} ></button>
           <p className="elements__like-counter">{card.likes.length}</p>
-          <p style={{fontSize: "13px"}}>{card.data}</p>
         </div>
         </div>
       </div>
